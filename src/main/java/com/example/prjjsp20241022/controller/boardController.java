@@ -40,4 +40,22 @@ public class boardController {
         List<Board> list = service.list();
         model.addAttribute("boardList", list);
     }
+
+    @GetMapping("view")
+    public void viewBoard(Integer id, Model model) {
+        Board board = service.get(id);
+        model.addAttribute("board", board);
+    }
+
+    @PostMapping("delete")
+    public String deleteBoard(Integer id) {
+        service.remove(id);
+        return "redirect:/board/list";
+    }
+
+    @GetMapping("edit")
+    public void editBoard(Integer id, Model model) {
+        Board board = service.get(id);
+        model.addAttribute("board", board);
+    }
 }
