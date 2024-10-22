@@ -23,4 +23,13 @@ public class BoardService {
         List<Board> list = mapper.selectAll();
         return list;
     }
+
+    public Board get(Integer id) {
+        return mapper.selectById(id);
+    }
+
+    public void remove(Integer id) {
+
+        mapper.deleteById(id);
+    }
 }
