@@ -5,9 +5,13 @@
     <title>Title</title>
 </head>
 <body>
-<h2>게시물 쓰기</h2>
+
+<c:import url="/WEB-INF/fragment/navbar.jsp"/>
+
+<h2>새 게시물 작성</h2>
 <form method="post">
-    <div>제목
+    <div>
+        제목
         <input type="text" name="title">
     </div>
     <div>
