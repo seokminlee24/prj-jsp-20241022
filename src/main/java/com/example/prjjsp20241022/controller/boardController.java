@@ -28,6 +28,6 @@ public class boardController {
     public String newBoard(Board board) {
         service.add(board);
 
-        return "redirect:/board";
+        return "redirect:/board/new";
     }
 }
