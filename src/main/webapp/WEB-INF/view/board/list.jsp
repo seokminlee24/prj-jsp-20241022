@@ -24,7 +24,9 @@
             <td>${board.id}</td>
             <td>
                 <a href="/board/view?id=${board.id}">
-                    ${board.title}</td>
+                        ${board.title}
+                </a>
+            </td>
             <td>${board.writer}</td>
             <td>${board.inserted}</td>
         </tr>
