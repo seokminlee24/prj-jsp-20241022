@@ -41,4 +41,12 @@ public interface BoardMapper {
             """)
     @Options(useGeneratedKeys = true, keyProperty = "id")
     int update(Board board);
+
+    @Select("""
+            SELECT *
+            FROM board
+            ORDER BY id DESC
+            LIMIT #{offset}, 10
+            """)
+    List<Board> selectAllPaging(Integer offset);
 }

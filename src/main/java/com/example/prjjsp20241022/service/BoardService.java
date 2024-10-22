@@ -19,8 +19,10 @@ public class BoardService {
         mapper.insert(board);
     }
 
-    public List<Board> list() {
-        List<Board> list = mapper.selectAll();
+    public List<Board> list(Integer page) {
+        //List<Board> list = mapper.selectAll();
+        Integer offset = (page - 1) * 10;
+        List<Board> list = mapper.selectAllPaging(offset);
         return list;
     }
 
