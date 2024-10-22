@@ -9,12 +9,19 @@
             <a href="/board/new">글작성</a>
         </div>
     </div>
-    
+
     <c:if test="${not empty message}">
         <style>
+            .h5 {
+                padding: 10px;
+            }
+
             .success {
                 background-color: skyblue;
-                margin: 10px;
+            }
+
+            .warning {
+                background-color: red;
             }
         </style>
         <div class="${message.type}">
