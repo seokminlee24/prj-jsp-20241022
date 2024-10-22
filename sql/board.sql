@@ -10,4 +10,5 @@ CREATE TABLE board
 );
 
 SELECT *
-FROM board;
+FROM board
+ORDER BY id DESC;
