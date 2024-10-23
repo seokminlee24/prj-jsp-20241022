@@ -4,7 +4,7 @@
 <head>
     <style>
         .active {
-
+            background-color: yellow;
         }
     </style>
     <title>Title</title>
@@ -42,12 +42,22 @@
 
 <%--    pagination --%>
 <div>
+    <%--    이전 버튼 --%>
+    <c:if test="${pageInfo.hasPrevPage}">
+        <a href="/board/list?page=${pageInfo.prevPageNumber}">이전</a>
+    </c:if>
+
     <c:forEach begin="${pageInfo.leftPageNumber}"
                end="${pageInfo.rightPageNumber}"
                var="pageNumber">
-        <a class="${pageInfo.currentPageNumber} == pageNumber ? 'active' :"
+        <a class="${pageInfo.currentPageNumber == pageNumber ? 'active' : ''}"
            href="/board/list?page=${pageNumber}">${pageNumber}</a>
     </c:forEach>
+
+    <%--    다음 버튼 --%>
+    <c:if test="${pageInfo.hasNextPage}">
+        <a href="/board/list?page=${pageInfo.nextPageNumber}">다음</a>
+    </c:if>
 </div>
 </body>
 </html>
