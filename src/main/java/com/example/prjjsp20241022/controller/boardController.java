@@ -40,9 +40,11 @@ public class boardController {
         return "redirect:/board/view";
     }
 
+    // /board/list
     // /board/list?page=1
     @GetMapping("list")
-    public void listBoard(@RequestParam(name = "page", defaultValue = "1") Integer page, Model model) {
+    public void listBoard(@RequestParam(name = "page", defaultValue = "1") Integer page,
+                          Model model) {
         // 한 페이지에 10개의 게시물
 
         Map<String, Object> result = service.list(page);
