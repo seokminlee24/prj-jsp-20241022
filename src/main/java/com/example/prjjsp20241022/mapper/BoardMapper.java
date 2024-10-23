@@ -36,10 +36,12 @@ public interface BoardMapper {
 
     @Update("""
             UPDATE board
-            SET title=#{title}, content=#{content}, writer=#{writer}
-            WHERE id = #{id}
+            SET title=#{title},
+                content=#{content}, 
+                writer=#{writer}
+            WHERE   
+                id = #{id}
             """)
-    @Options(useGeneratedKeys = true, keyProperty = "id")
     int update(Board board);
 
     @Select("""
