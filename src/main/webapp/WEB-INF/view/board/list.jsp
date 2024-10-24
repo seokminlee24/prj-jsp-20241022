@@ -22,32 +22,48 @@
     <c:param name="active" value="list"/>
 </c:import>
 
-<h2>게시물 목록</h2>
-<table>
-    <thead>
-    <tr>
-        <th>번호</th>
-        <th>제목</th>
-        <th>작성자</th>
-        <th>작성일시</th>
-    </tr>
-    </thead>
-    <tbody>
-    <c:forEach items="${boardList}" var="board">
-        <tr>
-            <td>${board.id}</td>
-            <td>
-                <a href="/board/view?id=${board.id}">
-                        ${board.title}
-                </a>
-            </td>
-            <td>${board.writer}</td>
-            <td>${board.inserted}</td>
-        </tr>
-    </c:forEach>
+<h2 class="my-16">게시물 목록</h2>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>
+                        <i class="fa-solid fa-hashtag">
+                            번호
+                        </i>
+                    </th>
+                    <th class="w-50">제목</th>
+                    <th>
+                        <i class="fa-solid fa-user">작성자</i>
+                    </th>
+                    <th class="d-none d-lg-table-cell">
+                        <i class="fa-solid fa-calendar">
+                            작성일시
+                        </i>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${boardList}" var="board">
+                    <tr>
+                        <td>${board.id}</td>
+                        <td>
+                            <a href="/board/view?id=${board.id}">
+                                    ${board.title}
+                            </a>
+                        </td>
+                        <td>${board.writer}</td>
+                        <td class="d-none d-lg-table-cell">${board.inserted}</td>
+                    </tr>
+                </c:forEach>
 
-    </tbody>
-</table>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 <%--    pagination --%>
 <div>
