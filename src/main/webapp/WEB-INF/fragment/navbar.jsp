@@ -24,7 +24,17 @@
                             작성
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="/member/signup" class="nav-link">
+                            <i class="fa-solid fa-user-plus">회원 가입</i>
+                        </a>
+                    </li>
 
+                    <li class="nav-item">
+                        <a href="/member/list" class="nav-link">
+                            <i class="fa-solid fa-people-line">회원목록</i>
+                        </a>
+                    </li>
 
                 </ul>
 
