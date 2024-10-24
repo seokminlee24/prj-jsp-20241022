@@ -14,12 +14,17 @@
                     <li class="nav-item">
                         <i class="fa-solid fa-list"></i>
                         <a class="nav-link  ${param.active == 'list' ? 'acitve': ''}" aria-current="page"
-                           href="/board/list">목록
+                           href="/board/list">
+                            <i class="fa-solid fa-list"></i>
+                            목록
                         </a>
                     </li>
                     <li class="nav-item">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                        <a class="nav-link ${param.active == 'list' ? 'acitve': ''}" href="/board/new">작성</a>
+                        <a class="nav-link ${param.active == 'list' ? 'acitve': ''}" href="/board/new">
+                            <i class="fa-solid fa-pen-to-square">
+                                작성
+                            </i>
+                        </a>
                     </li>
 
                 </ul>
