@@ -1,6 +1,7 @@
 package com.example.prjjsp20241022.controller;
 
 import com.example.prjjsp20241022.dto.Board;
+import com.example.prjjsp20241022.dto.Member;
 import com.example.prjjsp20241022.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
