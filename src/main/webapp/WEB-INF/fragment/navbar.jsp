@@ -3,7 +3,7 @@
 
 <%-- 로그인 여부 --%>
 <c:set value="${not empty sessionScope.loggedInMember}" var="loggedIn"/>
-<%-- admin 여부 --%>
+<%-- admin 여부--%>
 <c:set value="${sessionScope.loggedInMember.auth.contains('admin')}" var="isAdmin"/>
 
 <div class="mb-4">
