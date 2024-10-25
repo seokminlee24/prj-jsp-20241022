@@ -32,8 +32,13 @@
                 <label for="inputPassword1" class="form-label">
                     암호
                 </label>
-                <input value="${member.password}" readonly id="inputPassword1" name="password" type="text"
-                       class="form-control">
+                <div class="input-group">
+                    <input value="${member.password}" readonly id="inputPassword1" name="password" type="text"
+                           class="form-control">
+                    <a href="/member/edit-password?id=${member.id}" class="btn btn-outline-secondary">
+                        변경
+                    </a>
+                </div>
             </div>
             <div class="mb-3">
                 <label for="inputNickName1" class="form-label">
@@ -60,16 +65,21 @@
                 <input class="form-control" id="inputInserted1" type="datetime-local" value="${member.inserted}"
                        readonly>
             </div>
-
             <div class="mb-3">
                 <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal1">
                     <i class="fa-solid fa-user-minus"></i>
                     탈퇴
                 </button>
+                <a class="btn btn-outline-primary" href="/member/edit?id=${member.id}">
+                    <i class="fa-solid fa-user-pen"></i>
+                    수정
+                </a>
             </div>
         </div>
     </div>
 </div>
+
+
 <!-- Modal -->
 <div class="modal fade" id="deleteConfirmModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -100,6 +110,7 @@
         </div>
     </div>
 </div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
