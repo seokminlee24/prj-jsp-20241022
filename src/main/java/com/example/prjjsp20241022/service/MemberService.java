@@ -30,4 +30,21 @@ public class MemberService {
         int cnt = mapper.deleteByIdAndPassword(id, password);
         return cnt == 1;
     }
+
+    public void update(Member member) {
+        mapper.update(member);
+    }
+
+    public boolean updatePassword(String id, String oldPassword, String newPassword) {
+        int cnt = mapper.updatePassword(id, oldPassword, newPassword);
+        return cnt == 1;
+    }
+
+    public Member get(String id, String password) {
+        return mapper.selectByIdAndPassword(id, password);
+    }
+
+    public boolean hasAccess(String id, Member member) {
+        return id.equals(member.getId());
+    }
 }
