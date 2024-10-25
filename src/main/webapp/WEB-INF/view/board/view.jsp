@@ -12,75 +12,59 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
 <body>
-
 <c:import url="/WEB-INF/fragment/navbar.jsp"/>
 
 <%-- 수정/삭제 권한 --%>
-<c:set value="${sessionScope.loggedInMember.id == member.id}" var="hasAccess"/>
+<c:set value="${sessionScope.loggedInMember.id == board.writer}" var="hasAccess"/>
 
-
-<%--div.container>div.row>div.col--%>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-12 col-md-9 col-lg-6">
 
-            <h2 class="my-3">회원 정보</h2>
+            <h2 class="my-3">${board.id}번 게시물</h2>
 
             <div class="mb-3">
-                <label for="inputId1" class="form-label">
-                    아이디
+                <label for="" class="form-label">
+                    제목
                 </label>
-                <input value="${member.id}" readonly id="inputId1" name="id" type="text" class="form-control">
+                <input class="form-control" type="text" value="${board.title}" readonly>
             </div>
             <div class="mb-3">
-                <label for="inputPassword1" class="form-label">
-                    암호
+                <label for="" class="form-label">
+                    본문
                 </label>
-                <div class="input-group">
-                    <input value="${member.password}" readonly id="inputPassword1" name="password" type="text"
-                           class="form-control">
-                    <a href="/member/edit-password?id=${member.id}" class="btn btn-outline-secondary">
-                        변경
-                    </a>
-                </div>
+                <textarea class="form-control" id="" rows="10" readonly>${board.content}</textarea>
             </div>
             <div class="mb-3">
-                <label for="inputNickName1" class="form-label">
-                    별명
+                <label for="" class="form-label">
+                    작성자
                 </label>
-                <input value="${member.nickName}" readonly id="inputNickName1" name="nickName" type="text"
-                       class="form-control">
+                <input class="form-control" type="text" value="${board.writer}" readonly>
             </div>
             <div class="mb-3">
-                <label for="textareaDescription1" class="form-label">
-                    자기소개
+                <label for="" class="form-label">
+                    작성일시
                 </label>
-                <textarea readonly type="text"
-                          class="form-control"
-                          id="textareaDescription1"
-                          rows="10"
-                          name="description"
-                >${member.description}</textarea>
+                <input class="form-control" type="datetime-local" value="${board.inserted}" readonly>
             </div>
-            <div class="mb-3">
-                <label for="inputInserted1" class="form-label">
-                    가입일시
-                </label>
-                <input class="form-control" id="inputInserted1" type="datetime-local" value="${member.inserted}"
-                       readonly>
-            </div>
-            <div class="mb-3">
-                <c:if test="${hasAccess}">
-                    <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal1">
-                        <i class="fa-solid fa-user-minus"></i>
-                        탈퇴
-                    </button>
-                    <a class="btn btn-outline-primary" href="/member/edit?id=${member.id}">
-                        <i class="fa-solid fa-user-pen"></i>
-                        수정
-                    </a>
-                </c:if>
-            </div>
+
+            <c:if test="${hasAccess}">
+                <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal1">
+                    <i class="fa-solid fa-trash-can"></i>
+                    삭제
+                </button>
+                <a class="btn btn-outline-primary" href="/board/edit?id=${board.id}">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    수정
+                </a>
+            </c:if>
+
+            <c:if test="${hasAccess}">
+                <form id="deleteForm1" class="d-none" action="/board/delete" method="post">
+                    <input type="hidden" name="id" value="${board.id}">
+                </form>
+            </c:if>
+
         </div>
     </div>
 </div>
@@ -92,33 +76,24 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5">탈퇴 확인</h1>
+                    <h1 class="modal-title fs-5">삭제 확인</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div>
-                        <form action="/member/delete" method="post" id="deleteForm1">
-                            <input type="hidden" name="id" value="${member.id}">
-                            <label for="inputPassword2" class="form-label">
-                                암호
-                            </label>
-                            <input class="form-control" type="text" name="password" id="inputPassword2">
-                        </form>
-                    </div>
+                        ${board.id}번 게시물을 삭제하시겠습니까?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         닫기
                     </button>
                     <button form="deleteForm1" class="btn btn-danger">
-                        탈퇴
+                        삭제
                     </button>
                 </div>
             </div>
         </div>
     </div>
 </c:if>
-
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
