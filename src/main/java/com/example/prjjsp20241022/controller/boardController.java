@@ -25,18 +25,31 @@ public class boardController {
 
     // /board/new
     @GetMapping("new")
-    public void newBoard() {
+    public String newBoard(@SessionAttribute(value = "loggedInMember", required = false) Member member, RedirectAttributes rttr) {
 
-        // /WEB-INF/view/board/new.jsp
+        if (member == null) {
+            // 로그인 안한 상태
+            rttr.addFlashAttribute("message", Map.of("type", "warning",
+                    "text", "로그인한 회원만 글 작성이 가능합니다."));
+            return "redirect:/member/login";
+
+        } else {
+            // 로그인 한 상태
+            // /WEB-INF/view/board/new.jsp
+            return "board/new";
+        }
     }
 
     @PostMapping("new")
-    public String newBoard(Board board, RedirectAttributes rttr) {
-        service.add(board);
+    public String newBoard(Board board,
+                           RedirectAttributes rttr,
+                           @SessionAttribute("loggedInMember") Member member) {
+        service.add(board, member);
 
+        rttr.addFlashAttribute("message",
+                Map.of("type", "success",
+                        "text", "새 게시물이 등록되었습니다."));
         rttr.addAttribute("id", board.getId());
-        rttr.addFlashAttribute("message", Map.of("type", "success",
-                "text", "새 게시물이 작성되었습니다"));
         return "redirect:/board/view";
     }
 
@@ -59,26 +72,63 @@ public class boardController {
     }
 
     @PostMapping("delete")
-    public String deleteBoard(Integer id, RedirectAttributes rttr) {
-        service.remove(id);
+    public String deleteBoard(Integer id,
+                              RedirectAttributes rttr,
+                              @SessionAttribute("loggedInMember") Member member) {
+        try {
+            service.remove(id, member);
 
-        rttr.addFlashAttribute("message", Map.of("type", "warning",
-                "text", "게시물이 삭제 되었습니다,"));
-        return "redirect:/board/list";
+            rttr.addFlashAttribute("message",
+                    Map.of("type", "warning",
+                            "text", id + "번 게시물이 삭제되었습니다."));
+            return "redirect:/board/list";
+
+        } catch (RuntimeException e) {
+            rttr.addFlashAttribute("message",
+                    Map.of("type", "danger",
+                            "text", id + "번 게시물 삭제중 문제가 발생하였습니다."));
+            rttr.addAttribute("id", id);
+            return "redirect:/board/view";
+        }
     }
 
     @GetMapping("edit")
-    public void editBoard(Integer id, Model model) {
+    public String editBoard(Integer id,
+                            Model model,
+                            RedirectAttributes rttr,
+                            @SessionAttribute("loggedInMember") Member member) {
+
         Board board = service.get(id);
-        model.addAttribute("board", board);
+        if (board.getWriter().equals(member.getId())) {
+            model.addAttribute("board", board);
+            return null;
+        } else {
+            rttr.addFlashAttribute("message",
+                    Map.of("type", "danger",
+                            "text", "게시물 수정권한이 없습니다."));
+
+            return "redirect:/member/login";
+        }
     }
 
     @PostMapping("edit")
-    public String editBoard(Board board, RedirectAttributes rttr) {
-        service.update(board);
+    public String editBoard(Board board,
+                            RedirectAttributes rttr,
+                            @SessionAttribute("loggedInMember") Member member) {
+
+        try {
+            service.update(board, member);
+
+            rttr.addFlashAttribute("message",
+                    Map.of("type", "success",
+                            "text", board.getId() + "번 게시물이 수정되었습니다."));
+        } catch (RuntimeException e) {
+            //
+            rttr.addFlashAttribute("message",
+                    Map.of("type", "danger",
+                            "text", board.getId() + "번 게시물 수정중 문제가 발생되었습니다."));
+        }
         rttr.addAttribute("id", board.getId());
-        rttr.addFlashAttribute("message", Map.of("type", "success",
-                "text", board.getId() + "번 게시물이 수정 되었습니다,"));
         return "redirect:/board/view";
     }
 }
