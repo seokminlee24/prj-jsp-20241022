@@ -1,6 +1,7 @@
 package com.example.prjjsp20241022.mapper;
 
 import com.example.prjjsp20241022.dto.Board;
+import com.example.prjjsp20241022.dto.Member;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -10,10 +11,10 @@ public interface BoardMapper {
     @Insert("""
             INSERT INTO board
             (title, content, writer)
-            VALUES (#{title}, #{content}, #{writer})
+            VALUES (#{board.title}, #{board.content}, #{member.id})
             """)
-    @Options(useGeneratedKeys = true, keyProperty = "id")
-    int insert(Board board);
+    @Options(useGeneratedKeys = true, keyProperty = "board.id")
+    int insert(Board board, Member member);
 
     @Select("""
             SELECT * FROM board
@@ -37,8 +38,7 @@ public interface BoardMapper {
     @Update("""
             UPDATE board
             SET title=#{title},
-                content=#{content}, 
-                writer=#{writer}
+                content=#{content}
             WHERE   
                 id = #{id}
             """)
@@ -53,8 +53,7 @@ public interface BoardMapper {
     List<Board> selectAllPaging(Integer offset);
 
     @Select("""
-            SELECT COUNT(id)
-            FROM board
+            SELECT COUNT(id) FROM board
             """)
     Integer countAll();
 }
