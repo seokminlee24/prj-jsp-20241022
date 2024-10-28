@@ -52,28 +52,12 @@ ON b.writer = m.id
 
     @Select("""
             <script>
-            SELECT *
-            FROM board
-            <trim prefix="WHERE " prefixOverrides="OR">
-            <if test = "searchTarget == 'all' or searchTarget == 'title'">
- title LIKE CONCAT('%', #{keyword}, '%')
-</if>
-    <if test = "searchTarget == 'all' or searchTarget == 'content'">
-OR content LIKE CONCAT('%', #{keyword}, '%')
-</if>
-    <if test = "searchTarget == 'all' or searchTarget == 'writer'">
-OR  writer LIKE CONCAT('%', #{keyword}, '%')
-</if>
-                </trim>
-            ORDER BY id DESC
-            LIMIT #{offset}, 10
-            </script>
-            """)
-    List<Board> selectAllPaging(Integer offset, String keyword,String searchTarget);
-
-    @Select("""
-            <script>
-                SELECT COUNT(id) FROM board
+                SELECT b.id,
+                       b.title,
+                       b.inserted,
+                       m.nick_name writerNickName
+                FROM board b JOIN member m
+                    ON b.writer = m.id
                 <trim prefix="WHERE" prefixOverrides="OR">
                     <if test="searchTarget == 'all' or searchTarget == 'title'">
                         title LIKE CONCAT('%', #{keyword}, '%')
@@ -82,7 +66,29 @@ OR  writer LIKE CONCAT('%', #{keyword}, '%')
                         OR content LIKE CONCAT('%', #{keyword}, '%')
                     </if>
                     <if test="searchTarget == 'all' or searchTarget == 'writer'">
-                        OR writer LIKE CONCAT('%', #{keyword}, '%')
+                        OR m.nick_name LIKE CONCAT('%', #{keyword}, '%')
+                    </if>
+                </trim>
+                ORDER BY b.id DESC
+                LIMIT #{offset}, 10
+            </script>
+            """)
+    List<Board> selectAllPaging(Integer offset, String searchTarget, String keyword);
+
+    @Select("""
+            <script>
+                SELECT COUNT(b.id) 
+                FROM board b JOIN member m
+                    ON b.writer = m.id
+                <trim prefix="WHERE" prefixOverrides="OR">
+                    <if test="searchTarget == 'all' or searchTarget == 'title'">
+                        title LIKE CONCAT('%', #{keyword}, '%')
+                    </if>
+                    <if test="searchTarget == 'all' or searchTarget == 'content'">
+                        OR content LIKE CONCAT('%', #{keyword}, '%')
+                    </if>
+                    <if test="searchTarget == 'all' or searchTarget == 'writer'">
+                        OR m.nick_name LIKE CONCAT('%', #{keyword}, '%')
                     </if>
                 </trim>
             </script>
