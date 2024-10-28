@@ -30,7 +30,7 @@ public interface BoardMapper {
                    b.writer,
                    m.nick_name writerNickName
             FROM board b JOIN member m
-ON b.writer = m.id
+                    ON b.writer = m.id
             WHERE b.id = #{id}
             """)
     Board selectById(Integer id);
