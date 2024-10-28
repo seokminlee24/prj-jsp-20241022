@@ -69,7 +69,7 @@
     </select>
         </div>
         <div class="col-4 col-lg-2">
-            <input type="text" class="form-control" name="keyword">
+            <input type="text" class="form-control" name="keyword" value="${param.keyword}">
         </div>
         <div class="col-1">
             <button class="btn btn-outline-primary">
